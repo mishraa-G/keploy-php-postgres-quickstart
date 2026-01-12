@@ -5,7 +5,12 @@ require "db.php";
 
 $method = $_SERVER["REQUEST_METHOD"];
 $path = trim($_SERVER["REQUEST_URI"], "/");
-$parts = explode("/", $path);
+
+// Remove index.php from path if present
+$path = preg_replace("#^index\.php/?#", "", $path);
+
+$parts = $path === "" ? [] : explode("/", $path);
+
 
 // Health check
 if ($path === "health") {
